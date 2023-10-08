@@ -16,6 +16,7 @@ El proyecto se ha estructurado en los siguientes directorios:
 - Cada bloque de viviendas típicamente comprende entre 600 - 3000 personas
 - Es posible encontrar bloques con casas vacías y elevado número de habitaciones, como resorts.
 - Datos:
+
 | Columna | Acerca de | 
 | --- | --- |
 | MedInc | Mediana de ingresos de los habitantes por bloque |
