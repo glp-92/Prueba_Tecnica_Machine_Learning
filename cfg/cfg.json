@@ -1,0 +1,30 @@
+{
+    "project_routes": {
+        "log_dir_path": "../logs/",
+        "runs_dir_path": "../runs/"
+    },
+    "pre_processing_data": {
+        "data_validation_types": [
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64", 
+            "float64"
+        ], 
+        "value_limit_df": {
+            "MedInc": [0, 20],
+            "HouseAge": [0, 100],
+            "AveRooms": [0, 200],
+            "AveBedrms": [0, 100],
+            "Population": [0, 50000],
+            "AveOccup": [0, 1500],
+            "Latitude": [32, 42],
+            "Longitude": [-130, -110],
+            "MedHouseVal": [0, 10]
+        }
+    }
+} 
