@@ -16,6 +16,7 @@ El proyecto se ha estructurado en los siguientes directorios:
 - Cada bloque de viviendas típicamente comprende entre 600 - 3000 personas
 - Es posible encontrar bloques con casas vacías y elevado número de habitaciones, como resorts.
 - Datos:
+
 | Columna | Acerca de | 
 | --- | --- |
 | MedInc | Mediana de ingresos de los habitantes por bloque |
@@ -30,7 +31,7 @@ El proyecto se ha estructurado en los siguientes directorios:
 ## Procedimiento
 En una primera aproximación, y basándose en el tiempo disponible para la realización de la prueba, se tratará únicamente con el dataset sugerido, ya que el análisis de datos no es una tarea habitual. En caso de obtener buenos resultados y disponer de mas tiempo, se tratará de incorporar datos 'extra' al modelo (distancia al mar, servicios proximos...). Se aprovechará la oportunidad para refrescar conceptos y métodos de matplotlib, numpy, pandas y scikit-learn.
 
-[Procedimiento](doc/proc/primera_aproximacion.md)
+[Procedimiento](doc/proc/procedimiento.md)
 
 ## Referencias
 Se ha utilizado las siguientes referencias para el proyecto:
