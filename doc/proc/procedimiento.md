@@ -12,6 +12,9 @@
     3. Se realizará un split entre set de datos de entrenamiento, validación y test, de los cuales se tratará de extraer métricas del modelo.
 6. Entrenamiento.
     1. Se probará diversos algoritmos, se reservará un set de testing para realizar inferencias posteriores y tratar de extraer métricas en base a ello.
+        1. Arboles de decision: 
+            - Divide de forma recursiva, en profundidad los datos en 2 grupos. 
+            - El parámetro `max_depth` marca la profundidad del árbol, o el número máximo de divisiones que hace. Un valor elevado puede causar overfitting, aprendiendo detalles más precisos, ruido incluido.
 7. Optimización. Entre las posibles optimizaciones que se ha planteado se contempla las siguientes:
     1. El modelo usa un tipo de dato float64, ver si float32 produce alguna optimización. Inclusive la posibilidad de pasar el dataframe a formato int32.
     2. Se tratará de eliminar las columnas del dataset que tengan menor influencia sobre el valor del inmueble usando el mapa de correlación para hallar dichas columnas.
