@@ -9,7 +9,8 @@
 5. Preparacion de dataset:
     1. x_train será el dataframe sin los precios
     2. y_train será el precio de cada fila del dataframe
-    3. Se realizará un split entre set de datos de entrenamiento, validación y test, de los cuales se tratará de extraer métricas del modelo.
+    3. Se aplicará una normalización min-max value para que el dataframe tome valores entre 0 y 1, lo cual ayudará al cómputo y manejar rangos comunes de datos.
+    4. Se realizará un split entre set de datos de entrenamiento, validación y test, de los cuales se tratará de extraer métricas del modelo.
 6. Entrenamiento.
     1. Se probará diversos algoritmos, se reservará un set de testing para realizar inferencias posteriores y tratar de extraer métricas en base a ello.
         1. Arboles de decision: 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class DecissionTree():
+class SKL_Decission_Tree():
 
     def __init__(self, log, max_depth = 2):
         self.log = log

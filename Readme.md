@@ -46,5 +46,7 @@ Se ha utilizado las siguientes referencias para el proyecto:
 - [Plot correlation matrix](https://stackoverflow.com/questions/29432629/plot-correlation-matrix-using-pandas)
 - [Pandas df DOC](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html)
 - [Decission Tree](https://scikit-learn.org/stable/modules/tree.html)
+- [R2 Metric](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html)
+- [Keras Regression Model](https://www.tensorflow.org/tutorials/keras/regression?hl=es-419)
 
 Se ha utilizado IA Generativa (ChatGPT, Bard...) para implementación rápida de ciertos métodos, el planteamiento del problema y solución son propios, basado en experiencia y conocimiento en el campo.

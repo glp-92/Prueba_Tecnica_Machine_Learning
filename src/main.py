@@ -1,17 +1,23 @@
 import json, sys, os, time
 from datetime import datetime 
 import numpy as np
-from sklearn.metrics import mean_squared_error
+
 
 from data.get_dataset import get_dataset
 from data.data_validation import validate_data
 from data.data_clean import clean_data
 from data.data_export import plot_histogram, plot_correlation_map, plot_price_map
 from data.prepare_dataset import prepare_dataset
+from metrics.get_metrics import calc_mse, calc_mae, calc_rmse, calc_r2
+
 from util.class_log import Log
 from util.make_dir import make_dir
+
 from model.lineal_correlation import calculate_lineal_correlation
-from model.decission_tree import DecissionTree
+from model.SKL_Decission_Tree import SKL_Decission_Tree
+from model.SKL_Linear_Regression import SKL_Linear_Regression
+from model.SKL_Lasso import SKL_Lasso
+from model.TF_Dense_Net import TF_Dense_Net
 
 
 try: # Creacion de directorios y carga de configuracion
@@ -64,13 +70,62 @@ if __name__ == '__main__':
         log.info("PLOT_CORR:: Exportado mapa html con coordenadas y precios")
 
     # Dataset Preparing
-    x_train, y_train, x_val, y_val = prepare_dataset(df=df_housing)
+    x_train, y_train, x_val, y_val, y_min, y_max = prepare_dataset(df=df_housing)
     # print(x_train.describe())
     # print(y_train.describe())
 
-    for max_depth in [2,3,4,5,6,7,8,9,10]:
-        decission_tree = DecissionTree(log=log, max_depth=max_depth)
+    for max_depth in [2,3,4,5]:
+        decission_tree = SKL_Decission_Tree(log=log, max_depth=max_depth)
         decission_tree.fit(x_train=x_train, y_train=y_train, export_tree_path=f"{exp_dir}tree_depth{max_depth}.png")
         predictions = decission_tree.predict(x_val)
-        mse = mean_squared_error(y_val, predictions)
-        print(f"max_depth={max_depth}: MSE={mse}")
+        mse = calc_mse(y_val=y_val, predictions=predictions)
+        mae = calc_mae(y_val=y_val, predictions=predictions)
+        rmse = calc_rmse(y_val=y_val, predictions=predictions)
+        r2 = calc_r2(y_val=y_val, predictions=predictions)
+        print(f"DTREE:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
+
+    lr = SKL_Linear_Regression(log=log)
+    lr.fit(x_train=x_train, y_train=y_train)
+    predictions = lr.predict(x_val)
+    mse = calc_mse(y_val=y_val, predictions=predictions)
+    mae = calc_mae(y_val=y_val, predictions=predictions)
+    rmse = calc_rmse(y_val=y_val, predictions=predictions)
+    r2 = calc_r2(y_val=y_val, predictions=predictions)
+    print(f"LR={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
+    lasso = SKL_Lasso(log=log)
+    lasso.fit(x_train=x_train, y_train=y_train)
+    predictions = lasso.predict(x_val)
+    mse = calc_mse(y_val=y_val, predictions=predictions)
+    mae = calc_mae(y_val=y_val, predictions=predictions)
+    rmse = calc_rmse(y_val=y_val, predictions=predictions)
+    r2 = calc_r2(y_val=y_val, predictions=predictions)
+    print(f"LASSO={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
+
+    model = TF_Dense_Net(log=log)
+    model.build(x_ncols=len(x_val.columns), y_ncols=1)
+    model.fit(x_train=x_train, y_train=y_train, epochs=1)
+    predictions = model.predict(x_val)
+    mse = calc_mse(y_val=y_val, predictions=predictions)
+    mae = calc_mae(y_val=y_val, predictions=predictions)
+    rmse = calc_rmse(y_val=y_val, predictions=predictions)
+    r2 = calc_r2(y_val=y_val, predictions=predictions)
+    print(f"LASSO={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
+
+
+    import matplotlib.pyplot as plt
+
+    y_val = y_val.to_numpy()
+
+    # Obtener los 10 primeros datos
+    y_val = y_val[:10]
+    predictions = predictions[:10]
+    plt.clf()
+    # Crear un gráfico de dispersión
+    plt.plot(range(len(predictions)), predictions, marker="o", color="blue", linestyle=None)
+    plt.plot(range(len(y_val)), y_val, marker="o", color="red", linestyle=None)
+
+    # Agregar una leyenda
+    plt.legend(["Predicciones", "Valores reales"])
+
+    # Mostrar el gráfico
+    plt.savefig(f"{exp_dir}Results.png")
