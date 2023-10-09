@@ -46,27 +46,33 @@ if __name__ == '__main__':
     except Exception as e:
         log.error(f"DATASET_PREPROCESS:: {type(e).__name__}:{e}")
 
-    exp_dir = f"{runs_dir_path}{time_stamp}"
-    make_dir(exp_dir)
+    
+    exp_dir = f""
+    folders = {
+        "visualization_dir": f"{runs_dir_path}{time_stamp}data_visual/", 
+        "results_dir": f"{runs_dir_path}{time_stamp}results/"
+    }
+    for folder in folders.values():
+        make_dir(folder)
     log.info(f"EXP_DIR:: Creado directorio de experimento {time_stamp}")
 
     # Plotting data
-    plot_data = False
+    plot_data = True
     if plot_data:
         column_names = list(df_housing)
         for column in list(df_housing):
             plot_histogram(
                 data=df_housing[column], 
-                exp_path=f"{exp_dir}hist_{column}.png", 
+                exp_path=f"{folders['visualization_dir']}hist_{column}.png", 
                 title=column,
                 xlabel=column, 
                 ylabel='Frecuencia'
             )
         log.info("PLOT_HIST:: Exportados histogramas del dataframe")
         df_corr = calculate_lineal_correlation(df=df_housing)
-        plot_correlation_map(df_corr, exp_path=f"{exp_dir}corr_map.png")
+        plot_correlation_map(df_corr, exp_path=f"{folders['visualization_dir']}corr_map.png")
         log.info("PLOT_CORR:: Exportado mapa de correlacion de dataframe")
-        plot_price_map(df=df_housing, exp_path=f"{exp_dir}coord_map.html", n_samples=100)
+        plot_price_map(df=df_housing, exp_path=f"{folders['visualization_dir']}coord_map.html", n_samples=100)
         log.info("PLOT_CORR:: Exportado mapa html con coordenadas y precios")
 
     # Dataset Preparing
@@ -76,7 +82,7 @@ if __name__ == '__main__':
 
     for max_depth in [2,3,4,5]:
         decission_tree = SKL_Decission_Tree(log=log, max_depth=max_depth)
-        decission_tree.fit(x_train=x_train, y_train=y_train, export_tree_path=f"{exp_dir}tree_depth{max_depth}.png")
+        decission_tree.fit(x_train=x_train, y_train=y_train, export_tree_path=f"{folders['results_dir']}tree_depth{max_depth}.png")
         predictions = decission_tree.predict(x_val)
         mse = calc_mse(y_val=y_val, predictions=predictions)
         mae = calc_mae(y_val=y_val, predictions=predictions)
@@ -117,15 +123,18 @@ if __name__ == '__main__':
     y_val = y_val.to_numpy()
 
     # Obtener los 10 primeros datos
-    y_val = y_val[:10]
-    predictions = predictions[:10]
+    y_val = y_val[:40]
+    predictions = predictions[:40]
     plt.clf()
-    # Crear un gráfico de dispersión
-    plt.plot(range(len(predictions)), predictions, marker="o", color="blue", linestyle=None)
-    plt.plot(range(len(y_val)), y_val, marker="o", color="red", linestyle=None)
-
-    # Agregar una leyenda
-    plt.legend(["Predicciones", "Valores reales"])
+    plt.figure(figsize=(5,5))
+    plt.scatter(y_val, predictions)
+    plt.xlabel('True Values')
+    plt.ylabel('Predictions')
+    plt.axis('equal')
+    plt.axis('square')
+    plt.xlim([0,1])
+    plt.ylim([0,1])
+    _ = plt.plot([-100, 100], [-100, 100])
 
     # Mostrar el gráfico
-    plt.savefig(f"{exp_dir}Results.png")
+    plt.savefig(f"{folders['results_dir']}DL_res.png")

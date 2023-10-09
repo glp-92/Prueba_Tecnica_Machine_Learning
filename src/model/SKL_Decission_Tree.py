@@ -14,7 +14,7 @@ class SKL_Decission_Tree():
         self.tree.fit(x_train, y_train)
         if export_tree_path:
             try:
-                plt.figure(figsize=(6*self.max_depth,6*self.max_depth))
+                plt.figure(figsize=(2*self.max_depth,2*self.max_depth))
                 tree.plot_tree(self.tree, feature_names=x_train.columns)
                 plt.savefig(export_tree_path)
             except Exception as e:
