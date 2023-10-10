@@ -97,18 +97,18 @@ class Pipeline():
 
         # Huella temporal para el nuevo experimento
         time_stamp = datetime.now()
-        time_stamp = time_stamp.strftime("exp%Y%m%d%H%M%S/") 
+        time_stamp_str = time_stamp.strftime("exp%Y%m%d%H%M%S/") 
 
         # Creando directorios de experimento
         try:
             if args["export_data"]:
                 folders = {
-                    "visualization_dir": f"{args['runs_dir_path']}{time_stamp}data_visual/", 
-                    "results_dir": f"{args['runs_dir_path']}{time_stamp}results/"
+                    "visualization_dir": f"{args['runs_dir_path']}{time_stamp_str}data_visual/", 
+                    "results_dir": f"{args['runs_dir_path']}{time_stamp_str}results/"
                 }
                 for folder in folders.values():
                     make_dir(folder)
-                self.log.info(f"EXP_DIR:: Creado directorio de experimento {time_stamp}") 
+                self.log.info(f"EXP_DIR:: Creado directorio de experimento {time_stamp_str}") 
         except Exception as e:
             error_on_pipeline = True
             self.log.error(f"EXP_DIR:: Error en creación de directorios de experimento: {type(e).__name__}:{e}")
@@ -156,25 +156,26 @@ class Pipeline():
             # Decission Tree
             try:
                 self.log.info("DECISSION_TREE:: Ejecutando model arbol de decision...")
-                for max_depth in self.cfg["model"]["decission_tree"]["max_depth"]:
-                    model = SKL_Decission_Tree(log=self.log, max_depth=max_depth)
-                    export_path = None
-                    if args["export_data"]:
-                        export_path = f"{folders['results_dir']}tree_depth{max_depth}.png"
-                    model.fit(x_train=x_train, y_train=y_train, export_tree_path=export_path)
-                    self.log.info(f"DECISSION_TREE:: Realizando prediccion para depth {max_depth}")
-                    predictions = model.predict(x_val)
-                    self.log.info(f"DECISSION_TREE:: Extrayendo metricas...")
-                    mse, mae, rmse, r2 = calc_metrics(y_val=y_val, predictions=predictions)
-                    results["decission_tree"] = (mse, mae, rmse, r2)
-                    self.log.info(f"DECISSION_TREE_RES:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
-                    if args["export_data"]:
-                        export_scatter_map(
-                            predictions=predictions, 
-                            y_val=y_val, 
-                            points_to_draw=self.cfg["export"]["scatter_map"]["points_to_draw"],
-                            path_to_export=f"{folders['results_dir']}tree_depth{max_depth}_scatter.png"
-                        )
+                max_depth = self.cfg["model"]["decission_tree"]["max_depth"]
+                model = SKL_Decission_Tree(log=self.log, max_depth=max_depth)
+                export_path = None
+                if args["export_data"]:
+                    export_path = f"{folders['results_dir']}tree_depth.png"
+                model.fit(x_train=x_train, y_train=y_train, export_tree_path=export_path)
+                self.log.info(f"DECISSION_TREE:: Realizando prediccion para depth {max_depth}")
+                predictions = model.predict(x_val)
+                self.log.info(f"DECISSION_TREE:: Extrayendo metricas...")
+                mse, mae, rmse, r2 = calc_metrics(y_val=y_val, predictions=predictions)
+                results["decission_tree"] = (mse, mae, rmse, r2)
+                self.log.info(f"DECISSION_TREE_RES:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
+                if args["export_data"]:
+                    export_scatter_map(
+                        title=f"Decission tree depth {max_depth}",
+                        predictions=predictions, 
+                        y_val=y_val, 
+                        points_to_draw=self.cfg["export"]["scatter_map"]["points_to_draw"],
+                        path_to_export=f"{folders['results_dir']}tree_depth_scatter.png"
+                    )
             except Exception as e:
                 error_on_pipeline = True 
                 self.log.error(f"DECISSION_TREE:: Error en modelo Decission Tree: {type(e).__name__}:{e}")
@@ -192,6 +193,7 @@ class Pipeline():
                 self.log.info(f"LINEAR_REGRESSION:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
                 if args["export_data"]:
                     export_scatter_map(
+                        title=f"Linear Regression",
                         predictions=predictions, 
                         y_val=y_val, 
                         points_to_draw=self.cfg["export"]["scatter_map"]["points_to_draw"],
@@ -214,6 +216,7 @@ class Pipeline():
                 self.log.info(f"LASSO:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
                 if args["export_data"]:
                     export_scatter_map(
+                        title=f"Lasso",
                         predictions=predictions, 
                         y_val=y_val, 
                         points_to_draw=self.cfg["export"]["scatter_map"]["points_to_draw"],
@@ -251,6 +254,7 @@ class Pipeline():
                 self.log.info(f"DENSE_NET:: max_depth={max_depth}: MSE={mse}; MAE={mae}; RMSE={rmse}; R2={r2}")
                 if args["export_data"]:
                     export_scatter_map(
+                        title=f"Dense Net",
                         predictions=predictions, 
                         y_val=y_val, 
                         points_to_draw=self.cfg["export"]["scatter_map"]["points_to_draw"],
@@ -260,9 +264,14 @@ class Pipeline():
                 error_on_pipeline = True 
                 self.log.error(f"DENSE_NET:: Error en modelo Dense Net: {type(e).__name__}:{e}")
             
-        if not error_on_pipeline:
+        if not error_on_pipeline and args["export_data"]:
             try:
-                generate_html_report()
+                generate_html_report(
+                    time_stamp=time_stamp, 
+                    results=results, 
+                    path_to_report=f"{args['runs_dir_path']}{time_stamp_str}report.html"
+                )
+                self.log.info(f"REPORT_GEN:: Reporte generado en: {args['runs_dir_path']}{time_stamp_str}")
             except Exception as e:
                 error_on_pipeline = True 
                 self.log.error(f"REPORT_GEN:: Error en generacion de reporte: {type(e).__name__}:{e}")

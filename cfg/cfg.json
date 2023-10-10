@@ -30,7 +30,7 @@
     },
     "model": {
         "decission_tree": {
-            "max_depth": [2,3,4,5]
+            "max_depth": 2
         },
         "dense_net": {
             "epochs": 5,

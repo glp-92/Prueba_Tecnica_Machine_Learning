@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-def export_scatter_map(predictions, y_val, points_to_draw, path_to_export):
+def export_scatter_map(title, predictions, y_val, points_to_draw, path_to_export):
     y_val = y_val.to_numpy()
     y_val = y_val[:points_to_draw]
     predictions = predictions[:points_to_draw]
@@ -16,5 +16,6 @@ def export_scatter_map(predictions, y_val, points_to_draw, path_to_export):
     plt.ylim([0,1])
     _ = plt.plot([-100, 100], [-100, 100])
     # Mostrar el gráfico
+    plt.title(title)
     plt.savefig(path_to_export)
     return
