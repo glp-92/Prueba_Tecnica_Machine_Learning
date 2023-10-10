@@ -101,7 +101,7 @@ Los resultados son los siguientes:
 | Lasso | 0.0355 | 0.1458 | 0.1884 | 0.3765 |
 | Custom_Dense_net | 0.0246 | 0.1161 | 0.157 | 0.5672 |
 
-En cuanto a los gráficos de dispersion, se observa cómo el árbol de decisión presenta un mejor comportamiento respecto al resto de modelos al haber eliminado las 2 columnas. Para tratar de verificar que hay una relación fuerte con las coordenadas. El siguiente experimento utilizará éstas solamente para ver la relación con el precio, eliminando el resto de variables independientes:
+En cuanto a los gráficos de dispersion, se observa cómo el árbol de decisión presenta un mejor comportamiento respecto al resto de modelos al haber eliminado las 2 columnas. Para tratar de verificar que hay una relación fuerte con las coordenadas, el siguiente experimento utilizará éstas solamente para ver la relación con el precio, eliminando el resto de variables independientes:
 
 Los resultados son los siguientes:
 
