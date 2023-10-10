@@ -79,7 +79,7 @@ En una primera aproximación, y basándose en el tiempo disponible para la reali
 - Mapa de dispersión: si el modelo es perfecto, debería visualizarse una línea diagonal. Permite ver la desviación entre valor predicho y esperado.
 
 ## Conclusiones y resultados
-Se ha observado que la Custom_Dense_net es la que mejor se comporta, tanto por métricas como visualizando los diagramas de dispersion, para un experimento donde se ajusta el batch size a 64, 30 epochs, y Decission Tree con profundidad de 2 
+Se ha observado que la Custom_Dense_net es la que mejor se comporta, tanto por métricas como visualizando los diagramas de dispersion, para un experimento donde se ajusta el batch size a 64, 30 epochs, y Decission Tree con profundidad de 5 
 
 | Id Model | MSE | MAE | RMSE | R2 | 
 | --- | --- | --- | --- | --- |
@@ -88,7 +88,7 @@ Se ha observado que la Custom_Dense_net es la que mejor se comporta, tanto por m
 | Lasso | 0.0357 | 0.1474 | 0.189 | 0.3834 |
 | Custom_Dense_net | 0.0198 | 0.1031 | 0.1406 | 0.6586 |
 
-En los diagramas de dispersión, se ha observado que la Custom_Dense_net y el algoritmo de Regresion Lineal se ajustan mejor a los valores del dataset de test; por otro lado, el algoritmo de Lasso tiende a predecir precios aproximándose al punto medio del rango, por lo que para precios reales elevados la desviación es grande. El árbol de decisión tiende a formar escalones en la predicción de precios, tanto en profundidad 2 como a mayores profundidades, por lo que no resultaría un modelo deseable en este caso.
+En los diagramas de dispersión, se ha observado que la Custom_Dense_net y el algoritmo de Regresion Lineal se ajustan mejor a los valores del dataset de test; por otro lado, el algoritmo de Lasso tiende a predecir precios aproximándose al punto medio del rango, por lo que para precios reales elevados la desviación es grande. El árbol de decisión tiende a formar escalones en la predicción de precios, tanto en profundidad 2 como a profundidad 5, por lo que no resultaría un modelo deseable en este caso.
 
 Por otro lado, se ha probado a eliminar del dataframe las columnas asociadas a las coordenadas geográficas, ya que no deberían asociarse directamente al precio; quizás la distancia a la línea de mar en California resultaria una variable mejor, ya que por norma general las residencias próximas al mar tienen un precio mayor; pero las coordenadas como tal no deberían tratarse en este dataset si no se asociarán de alguna forma a esta clase de variables (distancia al mar, a hospitales, a zonas históricas...) y en este caso, no hay una asociación a priori lineal con el precio.
 
