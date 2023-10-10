@@ -56,6 +56,26 @@ En una primera aproximación, y basándose en el tiempo disponible para la reali
 
 [Ejecución de la Pipeline](doc/ejecución.md)
 
+## Métricas
+- MSE: el valor medio de la diferencia entre valor real y predicho al cuadrado
+    - Sensible a cambios entre valor real y predicho por elevar la diferencia al cuadrado
+    - Sensible a valores atípicos, penalizando las desviaciones
+    - No es comparable entre modelos con diferente unidad métrica
+    - Valores deseados: próximo a 0
+- MAE: Promedio de diferencia absoluta entre valor real y predicho. Usado típicamente en finanzas
+    - Menor sensibilidad a valores atípicos que mse
+    - Simple y facil de interpretar
+    - Comparable entre modelos con diferente unidad métrica
+    - Valores deseados: próximo a 0
+- RMSE: Raiz cuadrada del mse
+    - Mayor sensibilidad a valores atípicos que mae, pero la penalización de mse la reduce a la raíz cuadrada
+    - Valores deseados: próximo a 0
+- R cuadrado: Coeficiente de determinación. Explica como una variable se ve afectada por la variación de otra
+    - Sirve para medir la performance de un modelo. 
+    - Valores próximos a uno dicen que el modelo es capaz de explicar la variación en datos en el porcentaje que dá
+    - Mejor posible 1, puede ser negativo.
+- Mapa de dispersión: si el modelo es perfecto, debería visualizarse una línea diagonal. Permite ver la desviación entre valor predicho y esperado.
+
 ## Referencias
 Se ha utilizado las siguientes referencias para el proyecto:
 - [California Housing Dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html)
