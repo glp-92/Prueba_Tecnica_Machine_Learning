@@ -83,7 +83,7 @@ Se ha observado que la Custom_Dense_net es la que mejor se comporta, tanto por m
 
 | Id Model | MSE | MAE | RMSE | R2 | 
 | --- | --- | --- | --- | --- |
-| Linear Regression | 0.0214 | 0.1071 | 0.1463 | 0.6304 |
+| Linear Regression | 0.022 | 0.1089 | 0.1483 | 0.6206 |
 | Decission Tree | 0.0214 | 0.1071 | 0.1463 | 0.6304 |
 | Lasso | 0.0357 | 0.1474 | 0.189 | 0.3834 |
 | Custom_Dense_net | 0.0198 | 0.1031 | 0.1406 | 0.6586 |
