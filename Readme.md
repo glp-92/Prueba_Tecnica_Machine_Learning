@@ -50,7 +50,7 @@ El proyecto se ha estructurado en los siguientes directorios:
 ## Procedimiento
 En una primera aproximación, y basándose en el tiempo disponible para la realización de la prueba, se tratará únicamente con el dataset sugerido, ya que el análisis de datos no es una tarea habitual. En caso de obtener buenos resultados y disponer de mas tiempo, se tratará de incorporar datos 'extra' al modelo (distancia al mar, servicios proximos...) así como optimización. Se aprovechará la oportunidad para refrescar conceptos y métodos de matplotlib, numpy, pandas y scikit-learn.
 
-[Procedimiento](doc/procedimiento.md)
+[Procedimiento completo](doc/procedimiento.md)
 
 ## Ejecución
 
