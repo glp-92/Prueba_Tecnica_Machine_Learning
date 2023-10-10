@@ -1,7 +1,7 @@
 1. Al codificar el programa, y no saber en que entorno ni en que directorio se colocarán los ficheros de programa, se utiliza rutas relativas de forma excepcional. Utilizar rutas relativas puede dar lugar a vulnerabilidades en el código tales como escalada de privilegios, inyección de código o cross-site-scripting.
 2. Debido a las rutas relativas, la ejecución del script `main.py` del programa principal y el script `main.py` de los tests debe realizarse desde dentro del directorio `/src`. Además, el informe html generado contiene rutas relativas a las gráficas por lo que si se desplaza de directorio no se mostrarían.
 3. Instalación de dependencias.
-    1. Con [Anaconda](https://docs.anaconda.com/free/anaconda/install/index.html) (con la que se ha desarrollado):
+    1. El proyecto se ha desarrollado con [Anaconda](https://docs.anaconda.com/free/anaconda/install/index.html). Igualmente, mediante instalación directa con pip o a través de venv, virtualenv o similares debería funcionar:
         1. Creación y activación de entorno
             ```
             conda create -n env python=3.10
