@@ -43,6 +43,7 @@ class Pipeline():
                 - results:
                     - configuración arbol de decisión (tree_depth...)
                     - gráficas de dispersión de cada modelo
+                - report.html: html conteniendo los graficos anteriores y metricas de cada modelo
         Raises:
             TypeError: El diccionario de configuracion de limite de valores no tiene los valores requeridos
             ValueError: Columna del cfg de limite no existe en el dataframe

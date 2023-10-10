@@ -33,7 +33,7 @@
             "max_depth": 2
         },
         "dense_net": {
-            "epochs": 5,
+            "epochs": 30,
             "batch_size": 16,
             "model_name": "dense_net.h5"
         }

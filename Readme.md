@@ -1,15 +1,32 @@
 ## Estructura del proyecto
 El proyecto se ha estructurado en los siguientes directorios:
 - src: contiene los módulos de programa de Python, donde 'main.py' es el fichero principal de ejecución
-    - data: paquete que contiene el dataset, import, export y visualizacion del mismo
-    - model: contiene la arquitectura de los modelos que se probarán
-- src_test: contiene scripts de prueba de la aplicación
+    - data
+        - `data_clean` limpieza de dataset de valores duplicados, nulos o fuera de rango.
+        - `data_export` funciones de plot de los modelos (histograma, correlación, mapa)
+        - `data_validation` verificación de tipo de datos correcto en el dataframe de entrada.
+        - `get_dataset` descarga del dataset usando sklearn.
+        - `prepare_dataset` realiza la división del dataset en train y test y realiza la normalización min-max.
+    - metrics
+        - `export_scatter_map` función para exportar en imagen el mapa de dispersión, empleada por cada uno de los modelos.
+        - `get_metrics` calcula las métricas dado los valores de predicción y los del valor de test.
+    - model
+        - `lineal_correlation` modelo de correlación lineal empleado para ver las relaciones entre variables.
+        - `SKL_Decission_Tree` clase de árbol de decisión de scikit-learn.
+        - `SKL_Lasso` clase de algoritmo de Lasso de scikit-learn.
+        - `SKL_Linear_Regression` clase de algoritmo de regresión lineal múltiple de scikit-learn.
+        - `TF_Dense_Net` modelo custom en tensorflow que trata de abordar el problema.
+    - util
+        - `class_log` clase para generar logs del programa
+        - `generate_html_report` clase para generar el html en base al experimento realizado.
+        - `make_dir` función para creación de directorio y adición de `/` al final de la ruta especificada si no la tiene.
+
+- src_test: contiene scripts de prueba de la aplicación. Dentro del directorio `data` está el script que inyecta datos simulados al dataframe y utiliza las funciones de limpieza para la posterior comprobación de su eficacia.
 - doc: contiene la documentación extraída del proyecto
 - cfg: contiene los archivos de configuración. Se ha optado por usar un 'cfg.json', podría utilizarse un '.env' u otro tipo de archivo. Se opta por '.json' por facilidad de importar y leer diccionarios. Estos ficheros en producción no deberían estar en directorio público.
 - logs: directorio con los registros del programa
 - runs: directorio donde se almacenan las salidas del programa (experimentos), gráficas, mapas o tablas.
-
-**Importante** Dada la incertidumbre en cuanto a ejecución de la prueba, se ha optado por rutas relativas de ficheros, por lo que se debe acceder a '/src' o '/src_test' para realizar las ejecuciones de las pruebas o del programa principal. Usar rutas relativas no se considera buena práctica en desarrollo, ya que se incrementa la superficie de ataque pudiendo permitir a un atacante navegar a través del sistema de archivos.
+- weights: directorio de pesos de la Dense_net empleada.
 
 ## Acerca de California Housing Dataset
 - 20640 filas de datos, expresa la mediana del valor de la viviendo para los distritos de california
@@ -31,9 +48,13 @@ El proyecto se ha estructurado en los siguientes directorios:
 | Longitude | Longitud del bloque | 
 
 ## Procedimiento
-En una primera aproximación, y basándose en el tiempo disponible para la realización de la prueba, se tratará únicamente con el dataset sugerido, ya que el análisis de datos no es una tarea habitual. En caso de obtener buenos resultados y disponer de mas tiempo, se tratará de incorporar datos 'extra' al modelo (distancia al mar, servicios proximos...). Se aprovechará la oportunidad para refrescar conceptos y métodos de matplotlib, numpy, pandas y scikit-learn.
+En una primera aproximación, y basándose en el tiempo disponible para la realización de la prueba, se tratará únicamente con el dataset sugerido, ya que el análisis de datos no es una tarea habitual. En caso de obtener buenos resultados y disponer de mas tiempo, se tratará de incorporar datos 'extra' al modelo (distancia al mar, servicios proximos...) así como optimización. Se aprovechará la oportunidad para refrescar conceptos y métodos de matplotlib, numpy, pandas y scikit-learn.
 
-[Procedimiento](doc/proc/procedimiento.md)
+[Procedimiento](doc/procedimiento.md)
+
+## Ejecución
+
+[Ejecución de la Pipeline](doc/ejecución.md)
 
 ## Referencias
 Se ha utilizado las siguientes referencias para el proyecto:

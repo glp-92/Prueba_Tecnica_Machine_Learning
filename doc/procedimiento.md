@@ -10,15 +10,21 @@
     1. x_train será el dataframe sin los precios
     2. y_train será el precio de cada fila del dataframe
     3. Se aplicará una normalización min-max value para que el dataframe tome valores entre 0 y 1, lo cual ayudará al cómputo y manejar rangos comunes de datos.
-    4. Se realizará un split entre set de datos de entrenamiento, validación y test, de los cuales se tratará de extraer métricas del modelo.
+    4. Se realizará un split entre set de datos de entrenamiento, y test, de los cuales se tratará de extraer métricas del modelo.
 6. Entrenamiento.
     1. Se probará diversos algoritmos, se reservará un set de testing para realizar inferencias posteriores y tratar de extraer métricas en base a ello.
         1. Arboles de decision: 
             - Divide de forma recursiva, en profundidad los datos en 2 grupos. 
             - El parámetro `max_depth` marca la profundidad del árbol, o el número máximo de divisiones que hace. Un valor elevado puede causar overfitting, aprendiendo detalles más precisos, ruido incluido.
-7. Optimización. Entre las posibles optimizaciones que se ha planteado se contempla las siguientes:
-    1. El modelo usa un tipo de dato float64, ver si float32 produce alguna optimización. Inclusive la posibilidad de pasar el dataframe a formato int32.
-    2. Se tratará de eliminar las columnas del dataset que tengan menor influencia sobre el valor del inmueble usando el mapa de correlación para hallar dichas columnas.
-    3. Prunning y quantization de ser posible, de forma dinámica tras el entrenamiento, o estática.
+        2. Regresión lineal:
+            - Utilizada para predecir el valor de una variable dependiente de otras independientes. Se analiza la variabilidad de la variable dependiente mediante combinaciones lineales de las variables independientes.
+        3. Lasso:
+            - Modelo de regresión lineal regularizada, con mayor tolerancia al ruido de datos, mejor interpretabilidad que el modelo de regresión y ayuda a prevenir overfitting por la regularización.
+        4. Modelo de Deep Learning custom:
+            - Empleando tensorflow, se ha creado un modelo secuencial con 3 capas dense para enfrentar sus valores a los modelos lineales de regresión. Debido a que según las epochs de entrenamiento la ejecución puede requerir tiempo, se puede cargar el modelo desde el directorio weights/ si ya se ha entrenado en alguna ocasión. 
+7. (No se ha llegado finalmente) Optimización.
+    1. Se pretendía eliminar aquellas variables independientes (columnas) que menos relación tuviesen con la dependiente, examinado a través del mapa de correlación.
+    2. Se pretendía reducir el formato del dataset a float32 de ser posible
+    3. Se pretendía convertir el modelo de tensorflow .h5 a sqlite y quantizarlo a float16, mejorando su performance (ha dado buenos resultados con modelos de clasificación tipo Vggnet)
 8. Emisión de resultados.
-    1. Gráficas de resultados, función que permita utilizar el modelo
+    1. Gráficas de resultados, informe Html con resumen de todas las métricas y gráficas útiles.
