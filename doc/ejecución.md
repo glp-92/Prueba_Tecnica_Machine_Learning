@@ -4,8 +4,8 @@
     1. El proyecto se ha desarrollado con [Anaconda](https://docs.anaconda.com/free/anaconda/install/index.html). Igualmente, mediante instalación directa con pip o a través de venv, virtualenv o similares debería funcionar:
         1. Creación y activación de entorno
             ```
-            conda create -n env python=3.10
-            conda activate env
+            conda create -n mlenv python=3.10
+            conda activate mlenv
             ```
         2. Navegar al directorio raíz del proyecto con el entorno activo:
             ```
