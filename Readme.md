@@ -116,7 +116,7 @@ El modelo que mejor comportamiento ha tenido ha sido el árbol de decisión, pes
 
 Como conclusión, el modelo que mejor responde a la determinación del precio empleando estas variables ha sido el modelo de DL personalizado en Tensorflow. Después, el modelo de regresión lineal ha demostrado buena performance mientras que el árbol de decisión mayor tolerancia a grandes modificaciones en el dataset.
 
-Los experimentos se adjuntan en la carpeta `/experimentos` del proyecto
+Los experimentos se adjuntan en la carpeta [/doc/experimentos](/doc/experimentos/)
 
 ## Referencias
 Se ha utilizado las siguientes referencias para el proyecto:
