@@ -1,6 +1,8 @@
 ## Estructura del proyecto
 El proyecto se ha estructurado en los siguientes directorios:
 - src: contiene los módulos de programa de Python, donde 'main.py' es el fichero principal de ejecución
+    - controller
+        - `Pipeline` clase que maneja y centraliza la lógica de programa, en este caso la Pipeline de ML, desde ingestion de datos, procesamiento, entrenamiento e inferencia, utilizando el resto de módulos de programa.
     - data
         - `data_clean` limpieza de dataset de valores duplicados, nulos o fuera de rango.
         - `data_export` funciones de plot de los modelos (histograma, correlación, mapa)
@@ -15,7 +17,7 @@ El proyecto se ha estructurado en los siguientes directorios:
         - `SKL_Decission_Tree` clase de árbol de decisión de scikit-learn.
         - `SKL_Lasso` clase de algoritmo de Lasso de scikit-learn.
         - `SKL_Linear_Regression` clase de algoritmo de regresión lineal múltiple de scikit-learn.
-        - `TF_Dense_Net` modelo custom en tensorflow que trata de abordar el problema.
+        - `TF_Custom_Dense_Net` modelo custom en tensorflow que trata de abordar el problema.
     - util
         - `class_log` clase para generar logs del programa
         - `generate_html_report` clase para generar el html en base al experimento realizado.
@@ -26,7 +28,7 @@ El proyecto se ha estructurado en los siguientes directorios:
 - cfg: contiene los archivos de configuración. Se ha optado por usar un 'cfg.json', podría utilizarse un '.env' u otro tipo de archivo. Se opta por '.json' por facilidad de importar y leer diccionarios. Estos ficheros en producción no deberían estar en directorio público.
 - logs: directorio con los registros del programa
 - runs: directorio donde se almacenan las salidas del programa (experimentos), gráficas, mapas o tablas.
-- weights: directorio de pesos de la Dense_net empleada.
+- weights: directorio de pesos de la Custom_Dense_net empleada.
 
 ## Acerca de California Housing Dataset
 - 20640 filas de datos, expresa la mediana del valor de la viviendo para los distritos de california
@@ -75,6 +77,46 @@ En una primera aproximación, y basándose en el tiempo disponible para la reali
     - Valores próximos a uno dicen que el modelo es capaz de explicar la variación en datos en el porcentaje que dá
     - Mejor posible 1, puede ser negativo.
 - Mapa de dispersión: si el modelo es perfecto, debería visualizarse una línea diagonal. Permite ver la desviación entre valor predicho y esperado.
+
+## Conclusiones y resultados
+Se ha observado que la Custom_Dense_net es la que mejor se comporta, tanto por métricas como visualizando los diagramas de dispersion, para un experimento donde se ajusta el batch size a 64, 30 epochs, y Decission Tree con profundidad de 2 
+
+| Id Model | MSE | MAE | RMSE | R2 | 
+| --- | --- | --- | --- | --- |
+| Linear Regression | 0.0214 | 0.1071 | 0.1463 | 0.6304 |
+| Decission Tree | 0.0214 | 0.1071 | 0.1463 | 0.6304 |
+| Lasso | 0.0357 | 0.1474 | 0.189 | 0.3834 |
+| Custom_Dense_net | 0.0198 | 0.1031 | 0.1406 | 0.6586 |
+
+En los diagramas de dispersión, se ha observado que la Custom_Dense_net y el algoritmo de Regresion Lineal se ajustan mejor a los valores del dataset de test; por otro lado, el algoritmo de Lasso tiende a predecir precios aproximándose al punto medio del rango, por lo que para precios reales elevados la desviación es grande. El árbol de decisión tiende a formar escalones en la predicción de precios, tanto en profundidad 2 como a mayores profundidades, por lo que no resultaría un modelo deseable en este caso.
+
+Por otro lado, se ha probado a eliminar del dataframe las columnas asociadas a las coordenadas geográficas, ya que no deberían asociarse directamente al precio; quizás la distancia a la línea de mar en California resultaria una variable mejor, ya que por norma general las residencias próximas al mar tienen un precio mayor; pero las coordenadas como tal no deberían tratarse en este dataset si no se asociarán de alguna forma a esta clase de variables (distancia al mar, a hospitales, a zonas históricas...) y en este caso, no hay una asociación a priori lineal con el precio.
+
+Los resultados son los siguientes:
+
+| Id Model | MSE | MAE | RMSE | R2 | 
+| --- | --- | --- | --- | --- |
+| Linear Regression | 0.026 | 0.1184 | 0.1613 | 0.5434 |
+| Decission Tree | 0.0215 | 0.1062 | 0.1467 | 0.6223 |
+| Lasso | 0.0355 | 0.1458 | 0.1884 | 0.3765 |
+| Custom_Dense_net | 0.0246 | 0.1161 | 0.157 | 0.5672 |
+
+En cuanto a los gráficos de dispersion, se observa cómo el árbol de decisión presenta un mejor comportamiento respecto al resto de modelos al haber eliminado las 2 columnas. Para tratar de verificar que hay una relación fuerte con las coordenadas. El siguiente experimento utilizará éstas solamente para ver la relación con el precio, eliminando el resto de variables independientes:
+
+Los resultados son los siguientes:
+
+| Id Model | MSE | MAE | RMSE | R2 | 
+| --- | --- | --- | --- | --- |
+| Linear Regression | 0.0428 | 0.1593 | 0.2068 | 0.2418 |
+| Decission Tree | 0.0309 | 0.1297 | 0.1757 | 0.4527 |
+| Lasso | 0.0564 | 0.1873 | 0.2375 | -0.0 |
+| Custom_Dense_net | 0.0415 | 0.157 | 0.2036 | 0.2654 |
+
+El modelo que mejor comportamiento ha tenido ha sido el árbol de decisión, pese a que tanto las métricas como las gráficas muestran un ajuste menor a los datos de test. Se puede concluir que la relación del precio con las coordenadas no es fuerte.
+
+Como conclusión, el modelo que mejor responde a la determinación del precio empleando estas variables ha sido el modelo de DL personalizado en Tensorflow. Después, el modelo de regresión lineal ha demostrado buena performance mientras que el árbol de decisión mayor tolerancia a grandes modificaciones en el dataset.
+
+Los experimentos se adjuntan en la carpeta `/experimentos` del proyecto
 
 ## Referencias
 Se ha utilizado las siguientes referencias para el proyecto:

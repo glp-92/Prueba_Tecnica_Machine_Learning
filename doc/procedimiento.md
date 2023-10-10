@@ -22,9 +22,9 @@
             - Modelo de regresión lineal regularizada, con mayor tolerancia al ruido de datos, mejor interpretabilidad que el modelo de regresión y ayuda a prevenir overfitting por la regularización.
         4. Modelo de Deep Learning custom:
             - Empleando tensorflow, se ha creado un modelo secuencial con 3 capas dense para enfrentar sus valores a los modelos lineales de regresión. Debido a que según las epochs de entrenamiento la ejecución puede requerir tiempo, se puede cargar el modelo desde el directorio weights/ si ya se ha entrenado en alguna ocasión. 
-7. (No se ha llegado finalmente) Optimización.
-    1. Se pretendía eliminar aquellas variables independientes (columnas) que menos relación tuviesen con la dependiente, examinado a través del mapa de correlación.
-    2. Se pretendía reducir el formato del dataset a float32 de ser posible
-    3. Se pretendía convertir el modelo de tensorflow .h5 a sqlite y quantizarlo a float16, mejorando su performance (ha dado buenos resultados con modelos de clasificación tipo Vggnet)
+7. Optimización.
+    1. Se pretende eliminar aquellas variables independientes (columnas) que menos relación tuviesen con la dependiente, examinado a través del mapa de correlación. Así, se ha realizado pruebas eliminando las coordenadas geográficas, cuya relación no se ha considerado lineal con el precio.
+    2. (No se ha llegado finalmente) Se pretendía reducir el formato del dataset a float32 de ser posible
+    3. (No se ha llegado finalmente) Se pretendía convertir el modelo de tensorflow .h5 a sqlite y quantizarlo a float16, mejorando su performance (ha dado buenos resultados con modelos de clasificación tipo Vggnet)
 8. Emisión de resultados.
     1. Gráficas de resultados, informe Html con resumen de todas las métricas y gráficas útiles.

@@ -31,6 +31,7 @@
         - `pre_processing_data`: diccionario de preprocesado del dataset
             - `data_validation_types`: tipos de dato de validacion del dataset, cada columna debe corresponder en orden con el tipo de dato especificado en la lista.
             - `value_limit_df`: límite de valores en el dataframe.
+            - `cols_to_drop`: Lista con el nombre de las columnas que se desee eliminar. El programa maneja dejar siempre como mínimo una columna de variables independientes. Si se pone algún nombre no existente en el dataframe, su borrado se ignora.
         - `model`: reúne alguna configuración externa para alguno de los modelos
         - `export`: permite especificar el número de puntos que tendrá el mapa de dispersión.
     2. `cfg/cfg_test.json` Contiene las siguientes entradas:

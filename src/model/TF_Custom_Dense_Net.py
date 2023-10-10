@@ -4,7 +4,7 @@ from keras.models import load_model
 import numpy as np
 
 
-class TF_Dense_Net():
+class TF_Custom_Dense_Net():
 
     def __init__(self, log, x_ncols, y_ncols, model_path = None, from_saved = False):
         self.log = log

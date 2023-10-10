@@ -17,7 +17,7 @@ from model.lineal_correlation import calculate_lineal_correlation
 from model.SKL_Decission_Tree import SKL_Decission_Tree
 from model.SKL_Linear_Regression import SKL_Linear_Regression
 from model.SKL_Lasso import SKL_Lasso
-from model.TF_Dense_Net import TF_Dense_Net
+from model.TF_Custom_Dense_Net import TF_Custom_Dense_Net
 
 
 class Pipeline():
@@ -140,7 +140,11 @@ class Pipeline():
         # Dividiendo el set de datos en train y test
         if not error_on_pipeline: 
             try:
-                x_train, y_train, x_val, y_val, y_min, y_max = prepare_dataset(df=df_housing)
+                x_train, y_train, x_val, y_val, y_min, y_max = prepare_dataset(
+                    df=df_housing, 
+                    cols_to_drop=self.cfg["pre_processing_data"]["cols_to_drop"],
+                    log=self.log
+                )
             except Exception as e:
                 error_on_pipeline = True 
                 self.log.error(f"DATASET_PREPARING:: Error creando conjuntos train y test de dataset: {type(e).__name__}:{e}")
@@ -233,7 +237,7 @@ class Pipeline():
                 from_saved = args["saved_model"]
                 if from_saved and not os.path.exists(model_path):
                     from_saved = False
-                model = TF_Dense_Net(log=self.log, 
+                model = TF_Custom_Dense_Net(log=self.log, 
                     x_ncols=len(x_val.columns), 
                     y_ncols=len(y_train.shape), 
                     model_path=model_path,
