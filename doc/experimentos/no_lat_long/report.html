@@ -1,0 +1,70 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    </head>
+    <body>
+        <h1>Reporte Generado Automaticamente 2023/10/10 18:29:16</h1>
+        <h2>Resultados</h2>
+        <h3>Métricas generadas</h3>
+        <table><tr><td>Model ID</td><td>MSE</td><td>MAE</td><td>RMSE</td><td>R2</td></tr><tr><td>decission_tree</td><td>0.0215</td><td>0.1062</td><td>0.1467</td><td>0.6223</td></tr><tr><td>linear_regression</td><td>0.026</td><td>0.1184</td><td>0.1613</td><td>0.5434</td></tr><tr><td>lasso</td><td>0.0355</td><td>0.1458</td><td>0.1884</td><td>0.3765</td></tr><tr><td>dense_net</td><td>0.0246</td><td>0.1161</td><td>0.157</td><td>0.5672</td></tr></table>
+        <h3>Gráficos de dispersión</h3>
+        <div className = "dispersion">
+            <h4>Arboles de decision</h4>
+            <img width="300" src = results/tree_depth_scatter.png>
+        </div>
+        <div className = "dispersion">
+            <h4>Regresión lineal</h4>
+            <img width="300" src = results/linear_regression_scatter.png>
+        </div>
+        <div className = "dispersion">
+            <h4>Lasso</h4>
+            <img width="300" src = results/lasso_scatter.png>
+        </div>
+        <div className = "dispersion">
+            <h4>Dense Net</h4>
+            <img width="300" src = results/dense_net_scatter.png>
+        </div>
+
+        <h2>Dataset</h2>
+        <h3>Mapa de correlacion</h3>
+        <div className = "corr">
+            <h4>Correlación entre variables</h4>
+            <img width="500" src = data_visual/corr_map.png>
+        </div>
+        <h3>Histogramas</h3>
+        <div className = "hist">
+            <h4>Valor inmueble</h4>
+            <img width="300" src = data_visual/hist_MedHouseVal.png>
+        </div>
+        <div className = "hist">
+            <h4>Población</h4>
+            <img width="300" src = data_visual/hist_Population.png>
+        </div>
+        <div className = "hist">
+            <h4>Mediana Ingresos</h4>
+            <img width="300" src = data_visual/hist_MedInc.png>
+        </div>
+        <div className = "hist">
+            <h4>Edad viviendas</h4>
+            <img width="300" src = data_visual/hist_HouseAge.png>
+        </div>
+        <div className = "hist">
+            <h4>Promedio de habitaciones</h4>
+            <img width="300" src = data_visual/hist_AveRooms.png>
+        </div>
+        <div className = "hist">
+            <h4>Promedio de dormitorios</h4>
+            <img width="300" src = data_visual/hist_AveBedrms.png>
+        </div>
+        <div className = "hist">
+            <h4>Promedio de ocupación</h4>
+            <img width="300" src = data_visual/hist_AveOccup.png>
+        </div>
+        <div className = "map">
+            <a href="data_visual/coord_map.html">Click para acceder al mapa</a>
+        </div>
+            
+    </body>
+    </html>
+    
