@@ -22,7 +22,6 @@ def generate_html_report(time_stamp, results, path_to_report):
         <h3>Gráficos de dispersión</h3>
         <div className = "dispersion">
             <h4>Arboles de decision</h4>
-            <p>Depth = 2</p>
             <img width="300" src = results/tree_depth_scatter.png>
         </div>
         <div className = "dispersion">
