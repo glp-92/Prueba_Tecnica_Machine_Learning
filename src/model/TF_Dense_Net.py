@@ -4,8 +4,9 @@ import numpy as np
 
 class TF_Dense_Net():
 
-    def __init__(self, log):
+    def __init__(self, log, x_ncols, y_ncols):
         self.log = log
+        self.build(x_ncols=x_ncols, y_ncols=y_ncols)
         return 
     
     def build(self, x_ncols, y_ncols):
@@ -17,9 +18,9 @@ class TF_Dense_Net():
         self.model.compile(optimizer='adam', loss='mse')
         return
     
-    def fit(self, x_train, y_train, epochs):
+    def fit(self, x_train, y_train, batch_size, epochs):
         early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
-        self.model.fit(x_train, y_train, epochs = epochs, validation_split = 0.2, callbacks = [early_stop])
+        self.model.fit(x_train, y_train, batch_size = batch_size, epochs = epochs, validation_split = 0.2, callbacks = [early_stop])
         return
     
     def predict(self, x_data):

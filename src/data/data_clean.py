@@ -9,14 +9,16 @@ def delete_duplicated_rows(df):
 
 def delete_bad_data_rows(df, value_limit_dict):
     """
-    Elimina filas del DataFrame que contienen valores fuera de los límites establecidos.
-
     Args:
         df: DataFrame a limpiar.
         value_limit_dict: Diccionario que establece los límites de valores para cada columna. Lista blanca para filtrar valores confiables.
-
     Returns:
         DataFrame limpio.
+    Raises:
+        TypeError: El diccionario de configuracion de limite de valores no tiene los valores requeridos
+        ValueError: Columna del cfg de limite no existe en el dataframe
+    About:
+        Elimina filas del DataFrame que contienen valores fuera de los límites establecidos.
     """
     # Validacion de diccionario de limite de valores
     for column_name, limit_list in value_limit_dict.items():
