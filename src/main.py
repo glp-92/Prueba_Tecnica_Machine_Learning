@@ -19,10 +19,12 @@ import argparse
 parser = argparse.ArgumentParser(description='Programa principal:: Predicción de precio de vivienda')
 parser.add_argument('--verbose', type=str, required=True, help='Registra dataset importado en logs')
 parser.add_argument('--export', type=str, required=True, help='Si se desea exportar los datos')
+parser.add_argument('--saved_model', type=str, required=True, help='Si se desea importar el modelo Dense')
 args = parser.parse_args()
 
 verbose = str_to_bool(args.verbose)
 export = str_to_bool(args.export)
+saved_model = str_to_bool(args.saved_model)
 
 from controller.Pipeline import Pipeline
 from util.class_log import Log
@@ -35,6 +37,7 @@ try: # Creacion de directorios y carga de configuracion
         cfg = json.load(f)
     log_dir_path = make_dir(cfg["project_routes"]["log_dir_path"]) # Se crea directorio de almacenamiento de logs de no existir
     runs_dir_path = make_dir(cfg["project_routes"]["runs_dir_path"])
+    weights_path = make_dir(cfg["project_routes"]["weights_path"])
     log_manager = Log()
     log = log_manager.build(name='log', log_path=log_dir_path, storage_days=7, console_handler=True)
 except Exception as e:
@@ -44,7 +47,7 @@ except Exception as e:
 
 if __name__ == '__main__':
     pipeline = Pipeline(cfg=cfg, log=log)
-    err = pipeline.run_experiment(verbose=verbose, runs_dir_path=runs_dir_path, export_data=export)
+    err = pipeline.run_experiment(verbose=verbose, runs_dir_path=runs_dir_path, weights_path=weights_path, export_data=export, saved_model=saved_model)
     if not err:
         log.info("PIPELINE_SUCEED:: Pipeline finalizada sin errores\n\n")
     else:

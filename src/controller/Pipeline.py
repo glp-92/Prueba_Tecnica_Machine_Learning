@@ -1,5 +1,5 @@
-from datetime import datetime 
-import numpy as np
+from datetime import datetime
+import os
 
 from data.get_dataset import get_dataset
 from data.data_validation import validate_data
@@ -226,13 +226,23 @@ class Pipeline():
             # Dense net
             try:
                 self.log.info(f"DENSE_NET:: Ejecutando modelo de Deep Learning con dense layers...")
-                model = TF_Dense_Net(log=self.log, x_ncols=len(x_val.columns), y_ncols=len(y_train.shape))
-                model.fit(
-                    x_train=x_train,
-                    y_train=y_train, 
-                    batch_size=self.cfg["model"]["dense_net"]["batch_size"], 
-                    epochs=self.cfg["model"]["dense_net"]["epochs"]
+                model_path = f"{args['weights_path']}{self.cfg['model']['dense_net']['model_name']}"
+                from_saved = args["saved_model"]
+                if from_saved and not os.path.exists(model_path):
+                    from_saved = False
+                model = TF_Dense_Net(log=self.log, 
+                    x_ncols=len(x_val.columns), 
+                    y_ncols=len(y_train.shape), 
+                    model_path=model_path,
+                    from_saved=from_saved
                 )
+                if not from_saved:
+                    model.fit(
+                        x_train=x_train,
+                        y_train=y_train, 
+                        batch_size=self.cfg["model"]["dense_net"]["batch_size"], 
+                        epochs=self.cfg["model"]["dense_net"]["epochs"]
+                    )
                 self.log.info(f"DENSE_NET:: Realizando prediccion")
                 predictions = model.predict(x_val)
                 self.log.info(f"DENSE_NET:: Extrayendo metricas...")

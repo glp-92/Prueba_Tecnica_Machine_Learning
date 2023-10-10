@@ -1,7 +1,8 @@
 {
     "project_routes": {
         "log_dir_path": "../logs/",
-        "runs_dir_path": "../runs/"
+        "runs_dir_path": "../runs/",
+        "weights_path": "../weights/"
     },
     "pre_processing_data": {
         "data_validation_types": [
@@ -32,8 +33,9 @@
             "max_depth": [2,3,4,5]
         },
         "dense_net": {
-            "epochs": 50,
-            "batch_size": 16
+            "epochs": 5,
+            "batch_size": 16,
+            "model_name": "dense_net.h5"
         }
     },
     "export": {
