@@ -32,8 +32,10 @@ class Pipeline():
             verbose: Si True, imprime por pantalla features del dataset importado
             runs_dir_path: ruta del directorio /runs que se recoge del cfg
             export_data: si True, almacena datos en /runs
+            weights_path: ruta a los pesos del modelo de tensorflow
+            saved_model: booleano para importar el modelo precreado de tensorflow y saltarse el entrenamiento
         Returns:
-            None
+            boolean: ejecución de pipeline exitosa o no.
         Saves:
             - runs/ : genera un directorio con la huella temporal del experimento que contiene:
                 - data_visual: 
@@ -44,9 +46,6 @@ class Pipeline():
                     - configuración arbol de decisión (tree_depth...)
                     - gráficas de dispersión de cada modelo
                 - report.html: html conteniendo los graficos anteriores y metricas de cada modelo
-        Raises:
-            TypeError: El diccionario de configuracion de limite de valores no tiene los valores requeridos
-            ValueError: Columna del cfg de limite no existe en el dataframe
         About:
             Ejecuta los siguientes pasos:
             1. Importa el dataset en un dataframe de Pandas
